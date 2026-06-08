@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Shiva Krishna Koushik — Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --bg: #f7f5f0;
+    --surface: #ffffff;
+    --ink: #1a1814;
+    --ink-2: #5a5650;
+    --ink-3: #9a9490;
+    --accent: #c8503a;
+    --accent-light: #f5ece9;
+    --border: #e8e4de;
+    --radius: 4px;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    font-size: 16px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.2rem 4rem;
+    background: rgba(247,245,240,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.1rem;
+    color: var(--ink);
+    text-decoration: none;
+    letter-spacing: -0.02em;
+  }
+  .nav-links { display: flex; gap: 2.2rem; list-style: none; }
+  .nav-links a {
+    font-size: 0.82rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-2);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--accent); }
+
+  /* ── SECTIONS ── */
+  section { padding: 7rem 4rem; max-width: 1100px; margin: 0 auto; }
+
+  /* ── HERO ── */
+  #hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column; justify-content: center;
+    padding-top: 6rem;
+    position: relative;
+  }
+  .hero-eyebrow {
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1.2rem;
+    opacity: 0;
+    animation: fadeUp 0.6s 0.2s forwards;
+  }
+  .hero-name {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(3rem, 7vw, 5.5rem);
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    color: var(--ink);
+    opacity: 0;
+    animation: fadeUp 0.7s 0.35s forwards;
+  }
+  .hero-name em {
+    font-style: italic;
+    color: var(--accent);
+  }
+  .hero-sub {
+    margin-top: 1.6rem;
+    font-size: 1.05rem;
+    font-weight: 300;
+    color: var(--ink-2);
+    max-width: 520px;
+    line-height: 1.8;
+    opacity: 0;
+    animation: fadeUp 0.7s 0.5s forwards;
+  }
+  .hero-cta {
+    margin-top: 2.8rem;
+    display: flex; gap: 1rem; flex-wrap: wrap;
+    opacity: 0;
+    animation: fadeUp 0.7s 0.65s forwards;
+  }
+  .btn {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    padding: 0.75rem 1.6rem;
+    font-size: 0.85rem; font-weight: 500; letter-spacing: 0.04em;
+    text-decoration: none; border-radius: var(--radius);
+    transition: all 0.2s;
+    cursor: pointer; border: none;
+  }
+  .btn-primary { background: var(--ink); color: #fff; }
+  .btn-primary:hover { background: var(--accent); }
+  .btn-outline { background: transparent; color: var(--ink); border: 1.5px solid var(--border); }
+  .btn-outline:hover { border-color: var(--ink); }
+  .hero-scroll {
+    position: absolute; bottom: 2.5rem; left: 4rem;
+    font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--ink-3);
+    display: flex; align-items: center; gap: 0.6rem;
+    opacity: 0; animation: fadeUp 0.7s 1s forwards;
+  }
+  .scroll-line {
+    width: 32px; height: 1px; background: var(--ink-3);
+    animation: expandLine 1.2s 1.4s ease forwards;
+    transform-origin: left; transform: scaleX(0);
+  }
+  .hero-number {
+    position: absolute; right: 4rem; bottom: 2.5rem;
+    font-family: 'DM Serif Display', serif;
+    font-size: 8rem; line-height: 1;
+    color: var(--border);
+    user-select: none;
+    opacity: 0; animation: fadeIn 1s 0.8s forwards;
+  }
+
+  /* ── SECTION HEADER ── */
+  .sec-label {
+    font-size: 0.72rem; font-weight: 500;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 0.6rem;
+  }
+  .sec-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    letter-spacing: -0.02em; line-height: 1.1;
+    color: var(--ink);
+  }
+  .sec-divider {
+    width: 40px; height: 2px;
+    background: var(--accent);
+    margin: 1.4rem 0 2.8rem;
+  }
+
+  /* ── ABOUT ── */
+  #about { border-top: 1px solid var(--border); }
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem; align-items: start;
+    margin-top: 2rem;
+  }
+  .about-text p {
+    color: var(--ink-2); font-weight: 300;
+    line-height: 1.9; margin-bottom: 1.2rem;
+  }
+  .about-stats {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;
+  }
+  .stat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.4rem;
+  }
+  .stat-num {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2.4rem; color: var(--accent);
+    line-height: 1;
+  }
+  .stat-label {
+    font-size: 0.8rem; color: var(--ink-3);
+    font-weight: 500; margin-top: 0.3rem;
+    letter-spacing: 0.04em;
+  }
+
+  /* ── SKILLS ── */
+  #skills { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); max-width: 100%; padding: 7rem 0; }
+  #skills .inner { max-width: 1100px; margin: 0 auto; padding: 0 4rem; }
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem; margin-top: 0;
+  }
+  .skill-group {
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.4rem 1.6rem;
+    background: var(--bg);
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .skill-group:hover { border-color: var(--accent); transform: translateY(-2px); }
+  .skill-group-title {
+    font-size: 0.72rem; font-weight: 500;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 0.8rem;
+  }
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+  .tag {
+    font-size: 0.78rem; padding: 0.25rem 0.7rem;
+    background: var(--surface); color: var(--ink-2);
+    border: 1px solid var(--border);
+    border-radius: 2px; font-weight: 400;
+  }
+
+  /* ── PROJECTS ── */
+  #projects { border-top: 1px solid var(--border); }
+  .projects-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+  .project-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 2rem;
+    display: flex; flex-direction: column;
+    transition: border-color 0.2s, transform 0.2s;
+    text-decoration: none; color: inherit;
+  }
+  .project-card:hover { border-color: var(--accent); transform: translateY(-3px); }
+  .project-year {
+    font-size: 0.72rem; font-weight: 500;
+    color: var(--accent); letter-spacing: 0.08em;
+    text-transform: uppercase; margin-bottom: 0.8rem;
+  }
+  .project-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.4rem; color: var(--ink);
+    line-height: 1.2; margin-bottom: 0.8rem;
+  }
+  .project-desc {
+    font-size: 0.88rem; color: var(--ink-2);
+    font-weight: 300; line-height: 1.8;
+    flex: 1; margin-bottom: 1.4rem;
+  }
+  .project-stack { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1.4rem; }
+  .project-link {
+    font-size: 0.78rem; font-weight: 500;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--accent); text-decoration: none;
+    display: inline-flex; align-items: center; gap: 0.3rem;
+  }
+  .project-link::after { content: '→'; }
+
+  /* ── INTERNSHIPS ── */
+  #internships { border-top: 1px solid var(--border); }
+  .timeline { position: relative; padding-left: 1.5rem; }
+  .timeline::before {
+    content: ''; position: absolute;
+    left: 0; top: 6px; bottom: 6px;
+    width: 1px; background: var(--border);
+  }
+  .timeline-item {
+    position: relative; margin-bottom: 2.8rem;
+    padding-left: 1.8rem;
+  }
+  .timeline-item::before {
+    content: ''; position: absolute;
+    left: -1.5rem; top: 8px;
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--accent);
+    border: 2px solid var(--bg);
+    box-shadow: 0 0 0 2px var(--accent);
+  }
+  .timeline-meta {
+    font-size: 0.75rem; font-weight: 500;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 0.3rem;
+  }
+  .timeline-role {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.3rem; color: var(--ink);
+    margin-bottom: 0.2rem;
+  }
+  .timeline-company {
+    font-size: 0.85rem; color: var(--ink-3);
+    margin-bottom: 0.8rem;
+  }
+  .timeline-bullets {
+    list-style: none; display: flex; flex-direction: column; gap: 0.4rem;
+  }
+  .timeline-bullets li {
+    font-size: 0.88rem; color: var(--ink-2);
+    font-weight: 300; line-height: 1.7;
+    padding-left: 1rem; position: relative;
+  }
+  .timeline-bullets li::before {
+    content: '—'; position: absolute; left: 0;
+    color: var(--accent); font-size: 0.75rem;
+  }
+
+  /* ── CERTIFICATIONS ── */
+  #certifications { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); max-width: 100%; padding: 7rem 0; }
+  #certifications .inner { max-width: 1100px; margin: 0 auto; padding: 0 4rem; }
+  .cert-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.2rem;
+  }
+  .cert-card {
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.4rem 1.6rem;
+    background: var(--bg);
+    display: flex; align-items: flex-start; gap: 1rem;
+    transition: border-color 0.2s;
+  }
+  .cert-card:hover { border-color: var(--accent); }
+  .cert-icon {
+    width: 36px; height: 36px; flex-shrink: 0;
+    background: var(--accent-light);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem;
+  }
+  .cert-name { font-size: 0.9rem; font-weight: 500; color: var(--ink); line-height: 1.4; }
+  .cert-issuer { font-size: 0.78rem; color: var(--ink-3); margin-top: 0.2rem; }
+
+  /* ── CONTACT ── */
+  #contact { border-top: 1px solid var(--border); }
+  .contact-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 5rem; align-items: start;
+  }
+  .contact-text p {
+    color: var(--ink-2); font-weight: 300;
+    line-height: 1.9; margin-bottom: 1.4rem;
+  }
+  .contact-links { display: flex; flex-direction: column; gap: 1rem; }
+  .contact-link {
+    display: flex; align-items: center; gap: 1rem;
+    padding: 1rem 1.2rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    text-decoration: none; color: var(--ink);
+    background: var(--surface);
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .contact-link:hover { border-color: var(--accent); transform: translateX(4px); }
+  .contact-link-icon {
+    width: 36px; height: 36px; flex-shrink: 0;
+    background: var(--accent-light);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.9rem; color: var(--accent);
+  }
+  .contact-link-label { font-size: 0.72rem; color: var(--ink-3); text-transform: uppercase; letter-spacing: 0.06em; }
+  .contact-link-val { font-size: 0.9rem; font-weight: 500; }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 2rem 4rem;
+    display: flex; align-items: center; justify-content: space-between;
+    max-width: 1100px; margin: 0 auto;
+  }
+  footer p { font-size: 0.8rem; color: var(--ink-3); }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; } to { opacity: 1; }
+  }
+  @keyframes expandLine {
+    from { transform: scaleX(0); } to { transform: scaleX(1); }
+  }
+  .reveal {
+    opacity: 0; transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .reveal.visible { opacity: 1; transform: none; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    section { padding: 5rem 1.5rem; }
+    #skills .inner, #certifications .inner { padding: 0 1.5rem; }
+    footer { padding: 2rem 1.5rem; flex-direction: column; gap: 0.5rem; text-align: center; }
+    .about-grid, .projects-grid, .contact-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    .hero-number { display: none; }
+    .hero-scroll { left: 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#hero" class="nav-logo">SKK</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#internships">Experience</a></li>
+    <li><a href="#certifications">Certs</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <p class="hero-eyebrow">Software Developer · Hyderabad, India</p>
+  <h1 class="hero-name">Shiva Krishna<br><em>Koushik</em></h1>
+  <p class="hero-sub">Java &amp; Full Stack developer building real-world applications across two active internships. MCA student at JNTUH with a passion for clean code and scalable systems.</p>
+  <div class="hero-cta">
+    <a href="https://github.com/shivakrishnakoushik-cloud" target="_blank" class="btn btn-primary">View Projects</a>
+    <a href="https://linkedin.com/in/shiva-krishna-koushik-shetti-b31a8b354" target="_blank" class="btn btn-outline">Get in Touch</a>
+  </div>
+  <div class="hero-scroll"><span class="scroll-line"></span> Scroll</div>
+  <div class="hero-number">01</div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="reveal">
+    <p class="sec-label">Who I am</p>
+    <h2 class="sec-title">Developer. Learner.<br>Problem Solver.</h2>
+    <div class="sec-divider"></div>
+  </div>
+  <div class="about-grid reveal">
+    <div class="about-text">
+      <p>I'm a passionate software developer currently pursuing my MCA at JNTUH, Hyderabad. I work across two concurrent remote internships — in Java backend development and Full Stack web development — which puts me in a rare position among freshers: I ship real code on real teams, every day.</p>
+      <p>My work spans OOP-heavy Java systems, REST APIs, React frontends, and relational databases. I take pride in writing code that is not just functional, but clean, documented, and built to last.</p>
+      <p>I'm actively seeking internship and full-time opportunities where I can grow fast, contribute meaningfully, and work alongside experienced engineers.</p>
+    </div>
+    <div class="about-stats">
+      <div class="stat-card">
+        <div class="stat-num">3</div>
+        <div class="stat-label">Internships completed</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">2</div>
+        <div class="stat-label">Live projects on GitHub</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">8.25</div>
+        <div class="stat-label">B.Sc. CGPA</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">5+</div>
+        <div class="stat-label">Technologies used</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<div id="skills">
+  <div class="inner">
+    <div class="reveal">
+      <p class="sec-label">What I work with</p>
+      <h2 class="sec-title">Technical Skills</h2>
+      <div class="sec-divider"></div>
+    </div>
+    <div class="skills-grid reveal">
+      <div class="skill-group">
+        <div class="skill-group-title">Languages</div>
+        <div class="skill-tags">
+          <span class="tag">Java</span>
+          <span class="tag">JavaScript</span>
+          <span class="tag">Python</span>
+          <span class="tag">SQL</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">Web / UI</div>
+        <div class="skill-tags">
+          <span class="tag">HTML5</span>
+          <span class="tag">CSS3</span>
+          <span class="tag">React 18</span>
+          <span class="tag">TypeScript</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">Backend</div>
+        <div class="skill-tags">
+          <span class="tag">Node.js</span>
+          <span class="tag">Express</span>
+          <span class="tag">REST APIs</span>
+          <span class="tag">JWT</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">Databases</div>
+        <div class="skill-tags">
+          <span class="tag">MySQL</span>
+          <span class="tag">Supabase</span>
+          <span class="tag">PostgreSQL</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">Testing & Tools</div>
+        <div class="skill-tags">
+          <span class="tag">Git</span>
+          <span class="tag">GitHub</span>
+          <span class="tag">Debugging</span>
+          <span class="tag">Code Review</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">Concepts</div>
+        <div class="skill-tags">
+          <span class="tag">OOP</span>
+          <span class="tag">DSA</span>
+          <span class="tag">Agile</span>
+          <span class="tag">Documentation</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="reveal">
+    <p class="sec-label">What I've built</p>
+    <h2 class="sec-title">Projects</h2>
+    <div class="sec-divider"></div>
+  </div>
+  <div class="projects-grid reveal">
+    <div class="project-card">
+      <div class="project-year">2026</div>
+      <div class="project-title">Job Tracker System</div>
+      <p class="project-desc">A full-stack real-time job application tracking platform with session-based status management, Supabase authentication, and live CRUD operations. Built to solve the real problem of managing multiple job applications efficiently.</p>
+      <div class="project-stack">
+        <span class="tag">React 18</span>
+        <span class="tag">Vite</span>
+        <span class="tag">Supabase</span>
+        <span class="tag">PostgreSQL</span>
+      </div>
+      <a href="https://github.com/OptCamp/Codefecia_Q7" target="_blank" class="project-link">View on GitHub</a>
+    </div>
+    <div class="project-card">
+      <div class="project-year">2025</div>
+      <div class="project-title">Service Territory Booking Platform</div>
+      <p class="project-desc">A multi-user booking system with territory-based service allocation, role-based access control, and a MySQL relational backend. Handles complex booking logic with dynamic region assignment and user session management.</p>
+      <div class="project-stack">
+        <span class="tag">HTML</span>
+        <span class="tag">CSS</span>
+        <span class="tag">JavaScript</span>
+        <span class="tag">MySQL</span>
+      </div>
+      <a href="https://github.com/shivakrishnakoushik-cloud/Service-Territory-Based-Booking-Platform" target="_blank" class="project-link">View on GitHub</a>
+    </div>
+  </div>
+</section>
+
+<!-- INTERNSHIPS -->
+<section id="internships">
+  <div class="reveal">
+    <p class="sec-label">Where I've worked</p>
+    <h2 class="sec-title">Experience</h2>
+    <div class="sec-divider"></div>
+  </div>
+  <div class="timeline reveal">
+    <div class="timeline-item">
+      <div class="timeline-meta">Apr 2026 – Present · Remote</div>
+      <div class="timeline-role">Java Programming Intern</div>
+      <div class="timeline-company">IncodeVision</div>
+      <ul class="timeline-bullets">
+        <li>Architected 5+ reusable backend modules using Core Java and OOP, reducing code duplication across the codebase.</li>
+        <li>Designed inheritance hierarchies and custom exception handling, cutting bug resolution time by ~30%.</li>
+        <li>Wrote clean, well-documented code consistently passing internal peer code reviews.</li>
+      </ul>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-meta">Apr 2026 – Present · Remote</div>
+      <div class="timeline-role">Full Stack Intern</div>
+      <div class="timeline-company">UptoSkills</div>
+      <ul class="timeline-bullets">
+        <li>Built and tested a full User Authentication System (React/TypeScript, Node.js/Express, JWT) with bcrypt and rate limiting.</li>
+        <li>Developed 4+ responsive UI components with cross-browser compatibility across Chrome, Firefox, and Edge.</li>
+        <li>Integrated REST API endpoints with frontend, enabling seamless end-to-end data flow in a live production project.</li>
+      </ul>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-meta">Mar – Apr 2026 · Remote</div>
+      <div class="timeline-role">Web Development Intern</div>
+      <div class="timeline-company">Cyber Solutions & Info Board</div>
+      <ul class="timeline-bullets">
+        <li>Delivered 3 client-facing web interfaces with 100% cross-browser compatibility and full Git version control.</li>
+        <li>Maintained structured documentation for all modules, improving handover efficiency for the team.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- CERTIFICATIONS -->
+<div id="certifications">
+  <div class="inner">
+    <div class="reveal">
+      <p class="sec-label">Credentials</p>
+      <h2 class="sec-title">Certifications</h2>
+      <div class="sec-divider"></div>
+    </div>
+    <div class="cert-grid reveal">
+      <div class="cert-card">
+        <div class="cert-icon">🛡️</div>
+        <div>
+          <div class="cert-name">Cybersecurity Certification</div>
+          <div class="cert-issuer">ExcelR</div>
+        </div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-icon">💻</div>
+        <div>
+          <div class="cert-name">Full Stack Development Certificate</div>
+          <div class="cert-issuer">JNTUH QUEST 2026</div>
+        </div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-icon">🎓</div>
+        <div>
+          <div class="cert-name">Master of Computer Applications</div>
+          <div class="cert-issuer">JNTUH · 2025 – 2027</div>
+        </div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-icon">⭐</div>
+        <div>
+          <div class="cert-name">B.Sc. Computer Science · CGPA 8.25</div>
+          <div class="cert-issuer">Vivekavardhini Degree College · 2022–2025</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="reveal">
+    <p class="sec-label">Let's connect</p>
+    <h2 class="sec-title">Get in Touch</h2>
+    <div class="sec-divider"></div>
+  </div>
+  <div class="contact-grid reveal">
+    <div class="contact-text">
+      <p>I'm actively looking for software development internship and entry-level opportunities. If you're working on something interesting or have a role that fits, I'd love to hear from you.</p>
+      <p>Whether it's a quick question or a potential collaboration — my inbox is always open.</p>
+      <a href="mailto:shivakrishnakoushikshetti@gmail.com" class="btn btn-primary" style="margin-top:0.5rem; display:inline-flex;">Send an Email</a>
+    </div>
+    <div class="contact-links">
+      <a href="mailto:shivakrishnakoushikshetti@gmail.com" class="contact-link">
+        <div class="contact-link-icon">✉</div>
+        <div>
+          <div class="contact-link-label">Email</div>
+          <div class="contact-link-val">shivakrishnakoushikshetti@gmail.com</div>
+        </div>
+      </a>
+      <a href="https://linkedin.com/in/shiva-krishna-koushik-shetti-b31a8b354" target="_blank" class="contact-link">
+        <div class="contact-link-icon">in</div>
+        <div>
+          <div class="contact-link-label">LinkedIn</div>
+          <div class="contact-link-val">shiva-krishna-koushik-shetti</div>
+        </div>
+      </a>
+      <a href="https://github.com/shivakrishnakoushik-cloud" target="_blank" class="contact-link">
+        <div class="contact-link-icon">⌥</div>
+        <div>
+          <div class="contact-link-label">GitHub</div>
+          <div class="contact-link-val">shivakrishnakoushik-cloud</div>
+        </div>
+      </a>
+      <a href="tel:+919618127042" class="contact-link">
+        <div class="contact-link-icon">☎</div>
+        <div>
+          <div class="contact-link-label">Phone</div>
+          <div class="contact-link-val">+91 96181 27042</div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2026 Shiva Krishna Koushik</p>
+  <p>Built with care · Hyderabad, India</p>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 80);
+      }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
